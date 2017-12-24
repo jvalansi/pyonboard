@@ -5,7 +5,10 @@ BASE_URL = 'https://search.onboard-apis.com'
 
 def get_community_info(apikey, accept, area_id):
     r = requests.get(BASE_URL+'/communityapi/v2.0.0/Area/Full/', headers={'apikey': apikey, 'accept': accept}, params={'AreaId': area_id})
-    return json.loads(r.content)["response"]
+    try:
+        return json.loads(r.content)["response"]["result"]
+    except KeyError:
+        return None
 
 if __name__ == "__main__":
 
